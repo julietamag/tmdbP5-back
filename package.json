@@ -1,0 +1,40 @@
+{
+  "name": "tmbd-back",
+  "version": "1.0.0",
+  "description": "P5 project solo-week",
+  "main": "server.js",
+  "scripts": {
+    "start": "npm run server",
+    "server": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/julietamag/tmbdP5-back.git"
+  },
+  "author": "julietamag",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julietamag/tmbdP5-back/issues"
+  },
+  "homepage": "https://github.com/julietamag/tmbdP5-back#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "axios": "^1.3.4",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
+    "postcss-cli": "^10.1.0",
+    "sequelize": "^6.29.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.21"
+  }
+}
