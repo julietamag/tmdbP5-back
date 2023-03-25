@@ -1,13 +1,9 @@
 const Sequelize = require('sequelize');
 
-// require("dotenv").config();
+require("dotenv").config();
 
-// const { DB_NAME, PSQL_USER, PSQL_PASS, DB_PORT, DB_HOST } = process.env;
+const { DB_URL } = process.env;
 
-const db = new Sequelize('TMDB', null, null, {
-    host: 'localhost',
-    logging: false,
-    dialect: 'postgres'
-})
+const db = new Sequelize(DB_URL)
 
-module.exports = db;
+module.exports = db

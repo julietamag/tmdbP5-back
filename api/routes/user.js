@@ -1,10 +1,10 @@
 const { generateToken } = require("../config/tokens");
-const validateAuth = require("../config/auth").default;
+const validateAuth = require("../config/auth")
 const Users = require("../models/Users");
 const express = require("express");
 const router = express.Router();
-const capitalize = require('../utils/capitalize')
-const S = require('sequelize')
+const capitalize = require("../utils/capitalize");
+const S = require("sequelize");
 
 // CREATE NEW USER
 router.post("/register", (req, res, next) => {
@@ -64,7 +64,6 @@ router.get("/profile/:id", validateAuth, (req, res, next) => {
   Users.findOne({ where: { id: req.params.id } })
     .then((user) => {
       const { password, salt, ...filteredData } = user.dataValues;
-    ;
       res.send(filteredData);
     })
     .catch(next);
@@ -76,12 +75,15 @@ router.post("/:userId/favorites/:id", validateAuth, (req, res, next) => {
     .then((user) => {
       if (!user) return res.sendStatus(404);
       const { id } = req.params;
-      const {type} = req.body;
+      const { type } = req.body;
       const { favorites_Movie, favorites_Show } = user;
-      if (favorites_Movie.indexOf(id) !== -1 || favorites_Show.indexOf(id) !== -1) {
+      if (
+        favorites_Movie.indexOf(id) !== -1 ||
+        favorites_Show.indexOf(id) !== -1
+      ) {
         return res.sendStatus(409); // Conflict: already added to favorites
       } else {
-        if (type === 'tv') {
+        if (type === "tv") {
           return user.update({
             favorites_Show: [...user.favorites_Show, id],
           });
@@ -125,15 +127,15 @@ router.delete("/:userId/favorites/:id", validateAuth, (req, res, next) => {
 
 //SEARCH USER
 router.get("/search", (req, res, next) => {
-    let query = capitalize(req.query.query)
-    Users.findAll({
-        where: {
-          [S.Op.or]: [
-            { name: { [S.Op.like]: `%${query}%` } },
-            { lastName: { [S.Op.like]: `%${query}%` } },
-          ],
-        },
-      })
+  let query = capitalize(req.query.query);
+  Users.findAll({
+    where: {
+      [S.Op.or]: [
+        { name: { [S.Op.like]: `%${query}%` } },
+        { lastName: { [S.Op.like]: `%${query}%` } },
+      ],
+    },
+  })
     .then((results) => {
       if (!results) res.statusCode(404);
       res.send(results);
@@ -142,21 +144,18 @@ router.get("/search", (req, res, next) => {
 });
 
 //CHANGE USER PROFILE PICTURE
-router.put('/imageChange/:id', (req,res,next) => {
+router.put("/imageChange/:id", (req, res, next) => {
   Users.findByPk(req.params.id)
-  .then(user => {
-    user.update({
-      photo_url: req.body.photo_url
+    .then((user) => {
+      user.update({
+        photo_url: req.body.photo_url,
+      });
     })
-  })
-  .catch(next)
-})
+    .catch(next);
+});
 
-router.get('/', (req,res,next) => {
-  Users.findAll()
-  .then(user => res.send(user))
-})
-
-
+router.get("/", (req, res, next) => {
+  Users.findAll().then((user) => res.send(user));
+});
 
 module.exports = router;
